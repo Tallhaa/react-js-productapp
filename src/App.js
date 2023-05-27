@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react'
 function App() {
   const [products, setProducts] = useState([]);
   const [count, setCount] = useState(8);
-  const [showLoadMore, setShowLoadMore] = useState(false)
   const getData = async () => {
     let data = await fetch("https://dummyjson.com/products");
     data = await data.json();
@@ -17,9 +16,6 @@ function App() {
   }
   useEffect(() => {
     getData()
-    setInterval(() => {
-      setShowLoadMore(true)
-    }, 2000);
   }, [])
   return (
     <>
@@ -41,11 +37,11 @@ function App() {
         }
       </div>
       {
-        showLoadMore && (
+        products.length > 0 ? (
           <div className='pagination'>
             <button className='pagination-btn' onClick={loadMore}>Load More</button>
-          </div>
-        )
+          </div>)
+          : null
       }
     </>
   )
